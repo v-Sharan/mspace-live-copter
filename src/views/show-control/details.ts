@@ -1,6 +1,6 @@
 import dc8 from '~/skyc/dc-8.json';
 import dc10 from '~/skyc/dc-10.json';
-import dc5Runway from '~/skyc/dc-5-runway.json';
+import runway from '~/skyc/dcRunway5.json';
 export const details = [
   {
     id: 1,
@@ -75,18 +75,9 @@ export const details = [
         name: 'Runway',
         number_of_drones: [
           {
-            num: 10,
-            time: '10 min',
-          },
-          {
-            num: 8,
-            time: '10 min',
-            file: dc8,
-          },
-          {
             num: 5,
-            time: '23 min',
-            file: dc5Runway,
+            time: '22 min',
+            file: runway,
           },
         ],
       },
