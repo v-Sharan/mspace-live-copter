@@ -15,7 +15,6 @@ import MenuItem from '@material-ui/core/MenuItem';
 import { Button, Select } from '@material-ui/core';
 
 import { details } from './details';
-import dc10 from '~/skyc/dc-10.json';
 
 import {
   InputLabel,
@@ -145,9 +144,6 @@ const FileListItem = ({
                     setFileId(event.target.value);
                   }}
                 >
-                  {/* <MenuItem value='1'>Tambaram</MenuItem>
-                  <MenuItem value='2'>Sholavaram</MenuItem>
-                  <MenuItem value='3'>Tambaram with taxi way</MenuItem> */}
                   {details.map((item) => (
                     <MenuItem value={item.id}>{item.name}</MenuItem>
                   ))}

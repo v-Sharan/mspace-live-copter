@@ -18,6 +18,7 @@ import MessagesPanelView from './messages';
 import ShowControlPanel from './show-control';
 import UAVList from './uavs';
 import ThreeDTopLevelView from './three-d';
+import StrikePanel from './stike/StrikePanel';
 
 /* MapView not included as it is loaded lazily */
 
@@ -37,6 +38,7 @@ const views = {
   ShowControlPanel,
   UAVList,
   ThreeDTopLevelView,
+  StrikePanel,
 };
 
 export default views;

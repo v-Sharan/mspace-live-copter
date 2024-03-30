@@ -12,7 +12,7 @@ import Layers from '@material-ui/icons/Layers';
 import Map from '@material-ui/icons/Map';
 import Place from '@material-ui/icons/Place';
 import FormatListBulleted from '@material-ui/icons/FormatListBulleted';
-// import Storage from '@material-ui/icons/Storage';
+import Storage from '@material-ui/icons/Storage';
 import ThreeDRotation from '@material-ui/icons/ThreeDRotation';
 import WbSunny from '@material-ui/icons/WbSunny';
 
@@ -135,14 +135,14 @@ const Sidebar = ({ experimentalFeaturesEnabled, isOpen, t, workbench }) => (
           label={t('view.lcd-clock-panel')}
           component='lcd-clock-panel'
         />
-        {/*
+
         <Module
-          id="datasets"
+          id='datasets'
           icon={<Storage />}
-          label="Datasets"
-          component="dataset-list"
+          label='Datasets'
+          component='dataset-list'
         />
-        */}
+
         <Module
           id='locations'
           icon={<Place />}
@@ -162,6 +162,12 @@ const Sidebar = ({ experimentalFeaturesEnabled, isOpen, t, workbench }) => (
           icon={<FormatListBulleted />}
           label={t('view.log-panel')}
           component='log-panel'
+        />
+        <Module
+          id='strike'
+          icon={<FormatListBulleted />}
+          label={t('view.strike')}
+          component='strike'
         />
       </ModuleTray>
     </div>

@@ -65,8 +65,8 @@ require('../assets/css/kbd.css');
 require('../assets/css/screen.less');
 require('../assets/css/tooltips.less');
 
-const Tour = loadable(() =>
-  import(/* webpackChunkName: 'tour' */ './features/tour/Tour')
+const Tour = loadable(
+  () => import(/* webpackChunkName: 'tour' */ './features/tour/Tour')
 );
 
 const rootStyle = {

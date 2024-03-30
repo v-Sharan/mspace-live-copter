@@ -7,6 +7,7 @@ declare module 'perspective' {
     export type STACK = 'stack';
     export type PANEL = 'panel';
   }
+
   // export enum LayoutType {
   //   COLUMNS = 'columns',
   //   ROWS = 'rows',
@@ -44,7 +45,10 @@ declare module 'perspective' {
 declare module 'config' {
   import { type Perspective } from 'perspective';
   import { type ReactourProps } from 'reactour';
-
+  type StrikeType = {
+    url: string;
+    id: number;
+  };
   // NOTE: We do need to allow `null` here in order to enable the
   //       "unsetting" of default values in configuration overrides.
   // eslint-disable-next-line @typescript-eslint/ban-types
@@ -287,6 +291,7 @@ declare module 'config' {
        */
       exit: Nullable<string>;
     };
+    strike_url: StrikeType[];
   };
 
   const config: Config;

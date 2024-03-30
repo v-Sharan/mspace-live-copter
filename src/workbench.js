@@ -128,6 +128,11 @@ export const componentRegistry = {
     label: 'Event log',
     detachable: true,
   },
+  strike: {
+    component: views.StrikePanel,
+    label: 'Strike',
+    detachable: true,
+  },
   map: {
     component: MapView,
     label: 'Map',

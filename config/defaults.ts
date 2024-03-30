@@ -109,6 +109,48 @@ const defaults: Config = {
     help: 'https://doc.collmot.com/public/skybrush-live-doc/latest',
     exit: null,
   },
+  strike_url: [
+    {
+      id: 1,
+      url: 'http://192.168.6.151:8000/strike',
+    },
+    {
+      id: 2,
+      url: 'http://192.168.6.152:8000/strike',
+    },
+    {
+      id: 3,
+      url: 'http://192.168.6.153:8000/strike',
+    },
+    {
+      id: 4,
+      url: 'http://192.168.6.154:8000/strike',
+    },
+    {
+      id: 5,
+      url: 'http://192.168.6.155:8000/strike',
+    },
+    {
+      id: 6,
+      url: 'http://192.168.6.156:8000/strike',
+    },
+    {
+      id: 7,
+      url: 'http://192.168.6.157:8000/strike',
+    },
+    {
+      id: 8,
+      url: 'http://192.168.6.158:8000/strike',
+    },
+    {
+      id: 9,
+      url: 'http://192.168.6.159:8000/strike',
+    },
+    {
+      id: 10,
+      url: 'http://192.168.6.160:8000/strike',
+    },
+  ],
 };
 
 export default defaults;
