@@ -60,7 +60,6 @@ const LargeControlButtonGroup = ({
   uavActions,
 }) => {
   const classes = useStyles();
-  console.log('uavActions....', uavActions);
   return (
     <>
       <StartMethodExplanation />

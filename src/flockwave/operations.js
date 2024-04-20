@@ -169,7 +169,6 @@ export async function uploadDroneShow(hub, { uavId, data }, options) {
       }
     );
   } catch (error) {
-    console.log(error);
     throw new Error(
       errorToString(
         error.message || error,

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import config from 'config';
 import {
   InputLabel,
@@ -6,12 +6,13 @@ import {
   FormControlLabel,
   FormGroup,
   FormLabel,
-  RadioGroup,
+  Button,
   Radio,
   MenuItem,
   Box,
   Select,
   Input,
+  RadioGroup,
 } from '@material-ui/core';
 
 const StrikePanel = () => {
@@ -24,9 +25,21 @@ const StrikePanel = () => {
 
   const url = config['strike_url'];
 
+  const handleSubmit = () => {
+    const req_url = url[MSG.id - 1];
+    if (!MSG.latitude && !MSG.longitude) {
+      console.log(MSG.latitude);
+    }
+    console.log(req_url, MSG);
+  };
+
+  const handleAbort = () => {
+    console.log('About');
+  };
+
   return (
     <Box style={{ margin: 10, gap: 20 }}>
-      <FormGroup>
+      <FormGroup style={{ display: 'flex', flexDirection: 'column', gap: 15 }}>
         <Box style={{ display: 'flex', gap: 20, alignItems: 'center' }}>
           <FormControl fullWidth variant='standard'>
             <InputLabel id='drone-id'>Choose Drone:</InputLabel>
@@ -46,6 +59,21 @@ const StrikePanel = () => {
                 ))}
             </Select>
           </FormControl>
+          {/* <FormControl fullWidth variant='standard'>
+            <InputLabel id='drone-id'>Heading:</InputLabel>
+            <Input
+              style={{ padding: 5 }}
+              type='number'
+              value={MSG.heading}
+              onChange={({ target: { value } }) =>
+                setMSG((prev) => {
+                  return { ...prev, heading: value };
+                })
+              }
+            />
+          </FormControl> */}
+        </Box>
+        <Box style={{ display: 'flex', gap: 20, alignItems: 'center' }}>
           <FormControl fullWidth variant='standard'>
             <InputLabel id='drone-id'>Target Latitude:</InputLabel>
             <Input
@@ -59,20 +87,59 @@ const StrikePanel = () => {
               }
             />
           </FormControl>
+          <FormControl fullWidth variant='standard'>
+            <InputLabel id='drone-id'>Target Longitude:</InputLabel>
+            <Input
+              style={{ padding: 5 }}
+              type='number'
+              value={MSG.longitude}
+              onChange={({ target: { value } }) =>
+                setMSG((prev) => {
+                  return { ...prev, longitude: value };
+                })
+              }
+            />
+          </FormControl>
         </Box>
-        <FormControl fullWidth variant='standard'>
-          <InputLabel id='drone-id'>Target Longitude:</InputLabel>
-          <Input
-            style={{ padding: 5 }}
-            type='number'
-            value={MSG.longitude}
-            onChange={({ target: { value } }) =>
-              setMSG((prev) => {
-                return { ...prev, longitude: value };
-              })
-            }
-          />
+
+        <FormControl
+          fullWidth
+          variant='standard'
+          style={{
+            display: 'flex',
+            flexDirection: 'row',
+            gap: 10,
+            alignItems: 'center',
+          }}
+        >
+          <FormLabel id='form-position'>RTL :</FormLabel>
+          <RadioGroup aria-labelledby='form-position' row>
+            <FormControlLabel
+              label={'With RTL'}
+              control={<Radio checked={MSG.withRTL} />}
+              onChange={() =>
+                setMSG((prev) => {
+                  return { ...prev, withRTL: true };
+                })
+              }
+            />
+            <FormControlLabel
+              label={'Without RTL'}
+              control={<Radio checked={!MSG.withRTL} />}
+              onChange={() =>
+                setMSG((prev) => {
+                  return { ...prev, withRTL: false };
+                })
+              }
+            />
+          </RadioGroup>
         </FormControl>
+        <Button onClick={handleSubmit} variant='contained'>
+          Submit
+        </Button>
+        <Button onClick={handleAbort} variant='contained'>
+          Abort
+        </Button>
       </FormGroup>
     </Box>
   );

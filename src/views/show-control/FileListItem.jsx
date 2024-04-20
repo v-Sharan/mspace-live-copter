@@ -15,6 +15,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import { Button, Select } from '@material-ui/core';
 
 import { details } from './details';
+import tam5Single from '~/skyc/tambaram-5-alt.json';
 
 import {
   InputLabel,
@@ -72,13 +73,12 @@ const FileListItem = ({
   const [validate, setValidate] = useState(true);
 
   useLayoutEffect(() => {
-    // console.log('validate', filenameId, position, optName, dt);
     if (!!filenameId && !!position && !!optName && !!dt.num) setValidate(false);
   }, [filenameId, position, dt.num, optName]);
 
   const onSubmit = () => {
-    if (!accepts(dt.file)) return;
-    onHandleSelection(dt.file);
+    // if (!accepts(dt.file)) return;
+    onHandleSelection(tam5Single);
     SetEditig((prev) => !prev);
   };
 
@@ -89,7 +89,6 @@ const FileListItem = ({
       }
 
       if (!accepts || accepts(item)) {
-        console.log(item);
         if (onSelected) {
           onSelected(item);
         }
@@ -140,7 +139,6 @@ const FileListItem = ({
                   value={filenameId}
                   labelId='runway-id'
                   onChange={(event) => {
-                    console.log(event.target.value);
                     setFileId(event.target.value);
                   }}
                 >
@@ -156,7 +154,7 @@ const FileListItem = ({
                   style={{ marginTop: 5 }}
                 >
                   <FormLabel id='form-position' style={{ marginTop: 20 }}>
-                    Select TakeOff Position
+                    Select position
                   </FormLabel>
                   <RadioGroup aria-labelledby='form-position' row>
                     {takeoffPosition?.length != 0 &&
@@ -222,7 +220,7 @@ const FileListItem = ({
                 </FormControl>
               )}
             </Box>
-            <Button disabled={validate} onClick={onSubmit} variant='contained'>
+            <Button disabled={false} onClick={onSubmit} variant='contained'>
               Submit
             </Button>
           </FormGroup>

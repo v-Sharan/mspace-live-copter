@@ -316,7 +316,6 @@ const createShowLoaderThunkFactory = (
  */
 export const loadShowFromFile = createShowLoaderThunkFactory(
   async (file) => {
-    console.log('file', file);
     const url = file && file.path ? `file://${file.path}` : undefined;
     // const spec = await processFile(file);
     const spec = file;
