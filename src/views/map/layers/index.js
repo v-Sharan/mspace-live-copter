@@ -51,6 +51,7 @@ export const stateObjectToLayerSettings = (layer, layerId) => {
   }
 
   const CurrentLayerSettings = LayerSettings[layer.type];
+
   return (
     <CurrentLayerSettings
       key={`${layerId}_settings`}
@@ -86,6 +87,7 @@ export const stateObjectToLayer = (layer, props) => {
   }
 
   const CurrentLayer = Layers[layer.type];
+
   return (
     <CurrentLayer
       key={`${layer.id}_rendered`}

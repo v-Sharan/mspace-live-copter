@@ -16,6 +16,7 @@ import { Button, Select } from '@material-ui/core';
 
 import { details } from './details';
 import tam5Single from '~/skyc/tambaram-5-alt.json';
+import DceRoad from '~/skyc/dce-road2.json';
 
 import {
   InputLabel,
@@ -78,7 +79,7 @@ const FileListItem = ({
 
   const onSubmit = () => {
     // if (!accepts(dt.file)) return;
-    onHandleSelection(tam5Single);
+    onHandleSelection(DceRoad);
     SetEditig((prev) => !prev);
   };
 

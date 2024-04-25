@@ -6,7 +6,6 @@ import { usePrevious } from 'react-use';
 import { getPointResolution } from 'ol/proj';
 import { layer, source } from '@collmot/ol-react';
 import Box from '@material-ui/core/Box';
-import Button from '@material-ui/core/Button';
 import Image from '@material-ui/icons/Image';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import Skeleton from '@material-ui/lab/Skeleton';
@@ -236,8 +235,8 @@ const ImageLayerPresentation = ({
     },
   },
   zIndex,
-}) =>
-  position ? (
+}) => {
+  return position ? (
     <layer.GeoImage zIndex={zIndex}>
       <source.GeoImage
         url={image.data}
@@ -254,7 +253,7 @@ const ImageLayerPresentation = ({
       />
     </layer.GeoImage>
   ) : null;
-
+};
 ImageLayerPresentation.propTypes = {
   layer: PropTypes.object,
   zIndex: PropTypes.number,

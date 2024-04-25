@@ -49,6 +49,11 @@ declare module 'config' {
     url: string;
     id: number;
   };
+  type CameraType = {
+    url: string;
+    id: number;
+    connection: boolean;
+  };
   // NOTE: We do need to allow `null` here in order to enable the
   //       "unsetting" of default values in configuration overrides.
   // eslint-disable-next-line @typescript-eslint/ban-types
@@ -292,6 +297,7 @@ declare module 'config' {
       exit: Nullable<string>;
     };
     strike_url: StrikeType[];
+    camera_url: CameraType[];
   };
 
   const config: Config;

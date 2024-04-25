@@ -151,6 +151,58 @@ const defaults: Config = {
       url: 'http://192.168.6.160:8000/strike',
     },
   ],
+  camera_url: [
+    {
+      id: 1,
+      url: '192.168.6.155',
+      connection: false,
+    },
+    // {
+    //   id: 2,
+    //   url: '192.168.6.152',
+    //   connection: false,
+    // },
+    // {
+    //   id: 3,
+    //   url: '192.168.6.153',
+    //   connection: false,
+    // },
+    // {
+    //   id: 4,
+    //   url: '192.168.6.154',
+    //   connection: false,
+    // },
+    // {
+    //   id: 5,
+    //   url: '192.168.6.155',
+    //   connection: false,
+    // },
+    // {
+    //   id: 6,
+    //   url: '192.168.6.156',
+    //   connection: false,
+    // },
+    // {
+    //   id: 7,
+    //   url: '192.168.6.157',
+    //   connection: false,
+    // },
+    // {
+    //   id: 8,
+    //   url: '192.168.6.158',
+    //   connection: false,
+    // },
+    // {
+    //   id: 9,
+    //   url: '192.168.6.159',
+    //   connection: false,
+    // },
+    // {
+    //   id: 10,
+    //   url: '192.168.6.160',
+    //   connection: false,
+    // },
+  ],
 };
 
 export default defaults;

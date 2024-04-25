@@ -2,10 +2,12 @@ import config from 'config';
 import filter from 'lodash-es/filter';
 import partial from 'lodash-es/partial';
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-
+import { MessageSemantics } from '~/features/snackbar/types';
+import { getPointResolution } from 'ol/proj';
 import { Map, View, control, interaction, withMap } from '@collmot/ol-react';
+import { showNotification } from '~/features/snackbar/slice';
 
 import * as Condition from './conditions';
 import {
@@ -15,7 +17,7 @@ import {
   TransformFeatures,
 } from './interactions';
 import { Layers, stateObjectToLayer } from './layers';
-
+import { layer, source } from '@collmot/ol-react';
 import DrawingToolbar from './DrawingToolbar';
 import MapContextMenu from './MapContextMenu';
 import MapReferenceRequestHandler from './MapReferenceRequestHandler';
@@ -63,9 +65,11 @@ import {
   lonLatFromMapViewCoordinate,
 } from '~/utils/geography';
 import { toDegrees } from '~/utils/math';
-
 import 'ol/ol.css';
-
+import { ImageLayer } from './layers/image';
+import { closeOnLoadImage } from '~/features/show/slice';
+import store from '~/store';
+import { useSelector, useDispatch } from 'react-redux';
 /* ********************************************************************** */
 
 /**
@@ -78,8 +82,56 @@ const MapViewLayersPresentation = ({
   onFeaturesModified,
   selectedTool,
 }) => {
+  const Load = useSelector((state) => state.show.onLoadImage.Load);
+  const dispatch = useDispatch();
   let zIndex = 0;
   const renderedLayers = [];
+
+  const semantics = {
+    SUCCESS: MessageSemantics.SUCCESS,
+    INFO: MessageSemantics.INFO,
+    ERROR: MessageSemantics.ERROR,
+    WARNING: MessageSemantics.WARNING,
+  };
+
+  const [imageName, setImageName] = useState([]);
+
+  const ground_ip = '192.168.6.194';
+
+  useEffect(() => {
+    if (!Load) return;
+    (async () => {
+      try {
+        const res = await fetch(`http://${ground_ip}:8000/get_image_list`);
+        if (!res.ok) {
+          store.dispatch(
+            showNotification({
+              message: 'Downloading Image failed',
+              semantics: semantics.ERROR,
+            })
+          );
+          return;
+        }
+        const data = await res.json();
+        setImageName((prev) => [...prev, ...data.result]);
+        dispatch(closeOnLoadImage());
+        console.log(data.result);
+        store.dispatch(
+          showNotification({
+            message: 'Image Loaded Succesfully',
+            semantics: semantics.SUCCESS,
+          })
+        );
+      } catch (e) {
+        store.dispatch(
+          showNotification({
+            message: 'Something went wrong',
+            semantics: semantics.ERROR,
+          })
+        );
+      }
+    })();
+  }, [Load]);
 
   for (const layer of layers) {
     if (layer.type in Layers) {
@@ -93,6 +145,26 @@ const MapViewLayersPresentation = ({
       zIndex++;
     }
   }
+
+  // if (imageName.length != 0) {
+  //   for (const name in imageName) {
+  //     const location = imageName[name].split('.jpg')[0].split('_');
+
+  //     const Cutomlayer = {
+  //       parameters: {
+  //         image: {
+  //           data: `http://${ground_ip}:8000/get_image/${imageName[name]}`,
+  //         },
+  //         transform: {
+  //           position: { lon: location[10], lat: location[9] },
+  //           angle: 0,
+  //           scale: 5,
+  //         },
+  //       },
+  //     };
+  //     renderedLayers.push(<ImageLayer layer={Cutomlayer} zIndex={6} />);
+  //   }
+  // }
 
   return renderedLayers;
 };
@@ -471,6 +543,7 @@ class MapViewPresentation extends React.Component {
 
             <MapViewToolbars />
             <MapViewLayers onFeaturesModified={this._onFeaturesModified} />
+
             <MapViewControls />
             <MapViewInteractions
               selectedTool={selectedTool}
@@ -485,7 +558,6 @@ class MapViewPresentation extends React.Component {
               onSetSelectedFeatures={this._onSetSelectedFeatures}
               onSingleFeatureSelected={this._onFeatureSelected}
             />
-
             {/* OpenLayers interaction that triggers a context menu */}
             <ShowContextMenu
               layers={isLayerVisibleAndSelectable}

@@ -202,7 +202,6 @@ export function handleFeatureUpdatesInOpenLayers(
         if (isYAxis) {
           angle += 90;
         }
-
         dispatch(updateFlatEarthCoordinateSystem({ position, angle }));
       } else {
         // Some other origin (e.g., show origin). We don't handle it yet,

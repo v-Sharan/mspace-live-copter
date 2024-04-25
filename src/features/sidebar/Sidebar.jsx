@@ -15,6 +15,7 @@ import FormatListBulleted from '@material-ui/icons/FormatListBulleted';
 import Storage from '@material-ui/icons/Storage';
 import ThreeDRotation from '@material-ui/icons/ThreeDRotation';
 import WbSunny from '@material-ui/icons/WbSunny';
+import { CameraAltRounded } from '@material-ui/icons';
 
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -163,11 +164,17 @@ const Sidebar = ({ experimentalFeaturesEnabled, isOpen, t, workbench }) => (
           label={t('view.log-panel')}
           component='log-panel'
         />
-        <Module
+        {/* <Module
           id='strike'
           icon={<FormatListBulleted />}
           label={t('view.strike')}
           component='strike'
+        /> */}
+        <Module
+          id='camera'
+          icon={<CameraAltRounded />}
+          label={t('view.camera')}
+          component='camera'
         />
       </ModuleTray>
     </div>

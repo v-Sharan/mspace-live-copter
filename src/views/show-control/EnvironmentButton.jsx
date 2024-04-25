@@ -24,6 +24,7 @@ import { tt } from '~/i18n';
 /**
  * Specialized selector to format the secondary text on the button.
  */
+
 const getEnvironmentDescription = createSelector(
   getShowEnvironmentType,
   getOutdoorShowAltitudeReference,
@@ -73,7 +74,7 @@ const EnvironmentButton = ({
   <ListItem
     button
     disabled={status === Status.OFF}
-    onClick={onEditEnvironment}
+    onClick={() => onEditEnvironment()}
     {...rest}
   >
     <StatusLight status={status} />

@@ -476,8 +476,8 @@ export const selectOrdered = <T extends ItemLike>({
   order === undefined
     ? Object.values(byId)
     : order.length === 0
-    ? EMPTY_ARRAY
-    : order.map((id) => byId[id]).filter((t?: T): t is T => !isNil(t));
+      ? EMPTY_ARRAY
+      : order.map((id) => byId[id]).filter((t?: T): t is T => !isNil(t));
 
 /**
  * Helper function that takes an array of item IDs and an ordered collection,

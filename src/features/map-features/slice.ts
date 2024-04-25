@@ -21,77 +21,77 @@ type MapFeaturesSliceState = ReadonlyDeep<
 
 const initialState: MapFeaturesSliceState = {
   byId: {
-    /*
-        examplePolygon: {
-          id: 'examplePolygon',
-          type: FeatureType.POLYGON,
-          points: [
-            [19.061313, 47.47404],
-            [19.063373, 47.473699],
-            [19.063619, 47.471821],
-            [19.061001, 47.471835]
-          ],
-          label: 'Test polygon',
-          color: '#ffcc00',
-          labelStyle: LabelStyle.THIN_OUTLINE,
-          visible: true,
-          filled: true,
-          showPoints: false,
-        },
-        examplePoint: {
-          id: 'examplePoint',
-          type: FeatureType.POINTS,
-          points: [
-            [ lon, lat ]
-          ],
-          visible: true
-        },
-        examplePointSet: {
-          id: 'examplePointSet',
-          type: FeatureType.POINTS,
-          points: [
-            [ lon, lat ],
-            [ lon, lat ],
-            [ lon, lat ],
-            ...
-          ],
-          visible: true
-        },
-        examplePath: {
-          id: 'examplePath',
-          type: FeatureType.LINE_STRING,
-          points: [
-            [ lon, lat ],
-            [ lon, lat ],
-            [ lon, lat ],
-            ...
-          ],
-          showPoints: false,
-        },
-        exampleCircle: {
-          id: 'exampleCircle',
-          type: FeatureType.CIRCLE,
-          // two points will define the circle exactly; the first one is the
-          // center, the second one is an arbitrary point on the circumference
-          // of the circle
-          points: [
-            [ lon, lat ],
-            [ lon, lat ]
-          ],
-          color: '#ffcc00',
-        },
-        examplePolygon: {
-          id: 'examplePolygon',
-          type: FeatureType.POLYGON,
-          points: [
-            [ lon, lat ],
-            [ lon, lat ],
-            [ lon, lat ],
-            ...
-          ],
-          color: '#ffcc00'
-        }
-    */
+    // /*
+    //     examplePolygon: {
+    //       id: 'examplePolygon',
+    //       type: FeatureType.POLYGON,
+    //       points: [
+    //         [19.061313, 47.47404],
+    //         [19.063373, 47.473699],
+    //         [19.063619, 47.471821],
+    //         [19.061001, 47.471835]
+    //       ],
+    //       label: 'Test polygon',
+    //       color: '#ffcc00',
+    //       labelStyle: LabelStyle.THIN_OUTLINE,
+    //       visible: true,
+    //       filled: true,
+    //       showPoints: false,
+    //     },
+    //     examplePoint: {
+    //       id: 'examplePoint',
+    //       type: FeatureType.POINTS,
+    //       points: [
+    //         [ lon, lat ]
+    //       ],
+    //       visible: true
+    //     },
+    //     examplePointSet: {
+    //       id: 'examplePointSet',
+    //       type: FeatureType.POINTS,
+    //       points: [
+    //         [ lon, lat ],
+    //         [ lon, lat ],
+    //         [ lon, lat ],
+    //         ...
+    //       ],
+    //       visible: true
+    //     },
+    //     examplePath: {
+    //       id: 'examplePath',
+    //       type: FeatureType.LINE_STRING,
+    //       points: [
+    //         [ lon, lat ],
+    //         [ lon, lat ],
+    //         [ lon, lat ],
+    //         ...
+    //       ],
+    //       showPoints: false,
+    //     },
+    //     exampleCircle: {
+    //       id: 'exampleCircle',
+    //       type: FeatureType.CIRCLE,
+    //       // two points will define the circle exactly; the first one is the
+    //       // center, the second one is an arbitrary point on the circumference
+    //       // of the circle
+    //       points: [
+    //         [ lon, lat ],
+    //         [ lon, lat ]
+    //       ],
+    //       color: '#ffcc00',
+    //     },
+    //     examplePolygon: {
+    //       id: 'examplePolygon',
+    //       type: FeatureType.POLYGON,
+    //       points: [
+    //         [ lon, lat ],
+    //         [ lon, lat ],
+    //         [ lon, lat ],
+    //         ...
+    //       ],
+    //       color: '#ffcc00'
+    //     }
+    // */
   },
 
   order: [],

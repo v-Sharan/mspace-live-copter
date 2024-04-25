@@ -269,6 +269,7 @@
   },
   "view": {
     "beacon-list": "Beacons",
+    "camera": "Camera",
     "dock-list": "Docks",
     "feature-list": "Features",
     "field-notes": "Field notes",
