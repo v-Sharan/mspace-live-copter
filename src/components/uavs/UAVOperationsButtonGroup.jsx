@@ -67,6 +67,7 @@ const UAVOperationsButtonGroup = ({
     turnMotorsOff,
     turnMotorsOn,
     wakeUp,
+    guided,
   } = bindActionCreators(
     createUAVOperationThunks({
       getTargetedUAVIds(state) {
@@ -134,7 +135,7 @@ const UAVOperationsButtonGroup = ({
         <IconButton
           disabled={isSelectionEmpty}
           size={iconSize}
-          onClick={holdPosition}
+          onClick={guided}
         >
           <PositionHold fontSize={fontSize} />
         </IconButton>

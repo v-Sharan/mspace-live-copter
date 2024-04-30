@@ -22,7 +22,6 @@ const logger = makeLogger('messaging');
 const processResponses = (
   commandName,
   responses,
-  type,
   { reportSuccess = true, reportFailure = true } = {}
 ) => {
   responses = values(responses);
@@ -43,7 +42,7 @@ const processResponses = (
     } else if (numberOfFailures > 1) {
       message = `${commandName} failed for ${numberOfFailures} UAVs`;
     } else {
-      message = `${commandName} failed`;
+      message = `${commandName} failed ${responses}`;
     }
   } else if (reportSuccess) {
     semantics = MessageSemantics.SUCCESS;
@@ -123,7 +122,7 @@ const performMassOperation =
         ids: uavs,
         ...finalArgs,
       });
-      processResponses(name, responses, type, { reportFailure, reportSuccess });
+      processResponses(name, responses, { reportFailure, reportSuccess });
     } catch (error) {
       console.error(error);
       logger.error(`${name}: ${String(error)}`);
@@ -162,6 +161,16 @@ export const flashLightOnUAVsAndHideFailures = performMassOperation({
 export const takeoffUAVs = performMassOperation({
   type: 'UAV-TAKEOFF',
   name: 'Takeoff command',
+});
+
+export const guidedMode = performMassOperation({
+  type: 'X-UAV-GUIDED',
+  name: 'Guided mode command',
+});
+
+export const Socket = performMassOperation({
+  type: 'X-UAV-socket',
+  name: 'Guided mode command',
 });
 
 export const landUAVs = performMassOperation({
@@ -273,6 +282,8 @@ const OPERATION_MAP = {
   turnMotorsOff: turnMotorsOffForUAVs,
   turnMotorsOn: turnMotorsOnForUAVs,
   wakeUp: wakeUpUAVs,
+  guided: guidedMode,
+  socket: Socket,
 };
 
 /**
