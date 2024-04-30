@@ -157,11 +157,11 @@ const defaults: Config = {
       url: '192.168.6.155',
       connection: false,
     },
-    // {
-    //   id: 2,
-    //   url: '192.168.6.152',
-    //   connection: false,
-    // },
+    {
+      id: 2,
+      url: '192.168.6.153',
+      connection: false,
+    },
     // {
     //   id: 3,
     //   url: '192.168.6.153',

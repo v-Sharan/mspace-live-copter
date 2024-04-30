@@ -22,6 +22,7 @@ const logger = makeLogger('messaging');
 const processResponses = (
   commandName,
   responses,
+  type,
   { reportSuccess = true, reportFailure = true } = {}
 ) => {
   responses = values(responses);
@@ -122,7 +123,7 @@ const performMassOperation =
         ids: uavs,
         ...finalArgs,
       });
-      processResponses(name, responses, { reportFailure, reportSuccess });
+      processResponses(name, responses, type, { reportFailure, reportSuccess });
     } catch (error) {
       console.error(error);
       logger.error(`${name}: ${String(error)}`);
