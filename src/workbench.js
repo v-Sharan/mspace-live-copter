@@ -138,6 +138,11 @@ export const componentRegistry = {
     label: 'Camera GUI',
     detachable: true,
   },
+  swarm: {
+    component: views.SwarmPanel,
+    label: 'Swarm Panel',
+    detachable: true,
+  },
   map: {
     component: MapView,
     label: 'Map',

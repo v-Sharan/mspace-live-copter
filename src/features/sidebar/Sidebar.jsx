@@ -176,6 +176,12 @@ const Sidebar = ({ experimentalFeaturesEnabled, isOpen, t, workbench }) => (
           label={t('view.camera')}
           component='camera'
         />
+        <Module
+          id='camera'
+          icon={<CameraAltRounded />}
+          label={t('view.swarm')}
+          component='swarm'
+        />
       </ModuleTray>
     </div>
     {isOpen && (
