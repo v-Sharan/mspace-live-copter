@@ -6,3 +6,8 @@ export type LogItem = {
   level: number;
   auxiliaryId: string;
 };
+
+export type FileItem = {
+  time: number;
+  message: string;
+};

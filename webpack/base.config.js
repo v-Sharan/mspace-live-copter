@@ -93,6 +93,7 @@ module.exports = {
       stream: require.resolve('stream-browserify'),
       util: require.resolve('util'),
       vm: require.resolve('vm-browserify'),
+      path: require.resolve('path-browserify'),
     },
   },
   module: {

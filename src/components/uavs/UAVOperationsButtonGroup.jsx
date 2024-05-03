@@ -20,7 +20,8 @@ import PowerSettingsNew from '@material-ui/icons/PowerSettingsNew';
 import PlayArrow from '@material-ui/icons/PlayArrow';
 import Refresh from '@material-ui/icons/Refresh';
 import WbSunny from '@material-ui/icons/WbSunny';
-
+import GuidedMode from '@material-ui/icons/Bookmark';
+import { changeTakeOffAlt } from '~/features/uav-control/slice';
 import { TooltipWithContainerFromContext as Tooltip } from '~/containerContext';
 
 import Colors from '~/components/colors';
@@ -35,6 +36,8 @@ import { openUAVDetailsDialog } from '~/features/uavs/details';
 import { createUAVOperationThunks } from '~/utils/messaging';
 import { getPreferredCommunicationChannelIndex } from '~/features/mission/selectors';
 import { getUAVIdList } from '~/features/uavs/selectors';
+import { Input } from '@material-ui/core';
+import { getTakeOff } from '../../utils/messaging';
 
 /**
  * Main toolbar for controlling the UAVs.
@@ -50,6 +53,8 @@ const UAVOperationsButtonGroup = ({
   selectedUAVIds,
   size,
   startSeparator,
+  TakeoffChangeFunc,
+  alt,
   t,
 }) => {
   const isSelectionEmpty = isEmpty(selectedUAVIds) && !broadcast;
@@ -125,19 +130,37 @@ const UAVOperationsButtonGroup = ({
         <IconButton
           disabled={isSelectionEmpty}
           size={iconSize}
-          onClick={takeOff}
+          onClick={() => takeOff({ alt: 10 })}
         >
           <FlightTakeoff fontSize={fontSize} />
         </IconButton>
       </Tooltip>
+      <Input
+        value={alt}
+        disabled={isSelectionEmpty}
+        style={{ width: 25 }}
+        onChange={({ target: { value } }) => {
+          TakeoffChangeFunc(value);
+        }}
+      />
 
       <Tooltip content={t('UAVOpButtonGrp.positionHold')}>
         <IconButton
           disabled={isSelectionEmpty}
           size={iconSize}
-          onClick={guided}
+          onClick={holdPosition}
         >
           <PositionHold fontSize={fontSize} />
+        </IconButton>
+      </Tooltip>
+
+      <Tooltip content={'Guided Mode'}>
+        <IconButton
+          disabled={isSelectionEmpty}
+          size={iconSize}
+          onClick={guided}
+        >
+          <GuidedMode fontSize={fontSize} />
         </IconButton>
       </Tooltip>
 
@@ -293,7 +316,9 @@ UAVOperationsButtonGroup.propTypes = {
 
 export default connect(
   // mapStateToProps
-  () => ({}),
+  (state) => ({
+    alt: getTakeOff(state),
+  }),
   // mapDispatchToProps
   (dispatch) => ({
     ...bindActionCreators(
@@ -305,5 +330,8 @@ export default connect(
       dispatch
     ),
     dispatch,
+    TakeoffChangeFunc(alt) {
+      dispatch(changeTakeOffAlt(alt));
+    },
   })
 )(withTranslation()(UAVOperationsButtonGroup));

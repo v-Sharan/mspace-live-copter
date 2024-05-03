@@ -43,7 +43,10 @@ const MESSAGES_WITH_RECEIPTS = {
   'UAV-SIGNAL': true,
   'UAV-TAKEOFF': true,
   'UAV-TEST': true,
+  'UAV-SLEEP': true,
   'UAV-WAKEUP': true,
+  'X-UAV-GUIDED': true,
+  'X-UAV-socket': true,
 };
 
 /**

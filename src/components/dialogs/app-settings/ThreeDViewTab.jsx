@@ -98,7 +98,7 @@ const ThreeDViewTab = (props) => (
               >
                 {lightingConditions.map((item) => (
                   <MenuItem key={item.id} value={item.id}>
-                    {t(item.label)}
+                    {t('item.label')}
                   </MenuItem>
                 ))}
               </Select>

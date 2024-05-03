@@ -6,18 +6,20 @@ import isNil from 'lodash-es/isNil';
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 import { type ReadonlyDeep } from 'type-fest';
 
-import { type LogItem } from './types';
+import { type LogItem, type FileItem } from './types';
 
 type LogSliceState = ReadonlyDeep<{
   highestUnseenMessageLevel: number;
   items: LogItem[];
   nextId: number;
   panelVisible: boolean;
+  socketItems: FileItem[];
 }>;
 
 const initialState: LogSliceState = {
   highestUnseenMessageLevel: -1,
   items: [],
+  socketItems: [],
   nextId: 0,
   panelVisible: false,
 };
@@ -48,6 +50,10 @@ const { actions, reducer } = createSlice({
       }
     },
 
+    addTextLog(state, action: PayloadAction<FileItem[]>) {
+      state.socketItems = action.payload;
+    },
+
     clearLogItems(state) {
       state.items = [];
       state.highestUnseenMessageLevel = -1;
@@ -76,6 +82,7 @@ export const {
   clearLogItems,
   deleteLogItem,
   updateLogPanelVisibility,
+  addTextLog,
 } = actions;
 
 export default reducer;

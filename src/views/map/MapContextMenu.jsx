@@ -25,7 +25,7 @@ import PositionHold from '@material-ui/icons/Flag';
 import ActionPowerSettingsNew from '@material-ui/icons/PowerSettingsNew';
 import PinDrop from '@material-ui/icons/PinDrop';
 import Refresh from '@material-ui/icons/Refresh';
-
+import { openFlyToTargetDialogWithCoordinate } from '~/features/uav-control/actions';
 import { createSelector } from '@reduxjs/toolkit';
 
 import ContextMenu from '~/components/ContextMenu';
@@ -50,7 +50,6 @@ import {
 } from '~/features/mission/slice';
 import { getGeofencePolygonId } from '~/features/mission/selectors';
 import { updateOutdoorShowSettings } from '~/features/show/actions';
-import { openFlyToTargetDialogWithCoordinate } from '~/features/uav-control/actions';
 import { openUAVDetailsDialog } from '~/features/uavs/details';
 import { getSelectedUAVIds } from '~/features/uavs/selectors';
 
@@ -459,12 +458,12 @@ const getContextProvider = createSelector(
   getSelectedUAVIds,
   getGeofencePolygonId,
   (
-      selectedFeatureIds,
-      selectedFeatureLabels,
-      selectedFeatureTypes,
-      selectedUAVIds,
-      geofencePolygonId
-    ) =>
+    selectedFeatureIds,
+    selectedFeatureLabels,
+    selectedFeatureTypes,
+    selectedUAVIds,
+    geofencePolygonId
+  ) =>
     (context) => ({
       selectedFeatureIds,
       selectedFeatureLabels,

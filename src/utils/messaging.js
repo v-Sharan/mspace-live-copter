@@ -7,7 +7,6 @@ import isError from 'lodash-es/isError';
 import isNil from 'lodash-es/isNil';
 import mapValues from 'lodash-es/mapValues';
 import values from 'lodash-es/values';
-
 import { showConfirmationDialog } from '~/features/prompt/actions';
 import { shouldConfirmUAVOperation } from '~/features/settings/selectors';
 import { showNotification } from '~/features/snackbar/slice';
@@ -86,6 +85,7 @@ const performMassOperation =
   ({
     type,
     name,
+    alt = 2.5,
     mapper = undefined,
     reportFailure = true,
     reportSuccess = true,
@@ -116,12 +116,13 @@ const performMassOperation =
           return;
         }
       }
+      let msg = { type, ids: uavs, ...finalArgs };
+      if (type == 'UAV-TAKEOFF') {
+        alt = getTakeOff(store.getState());
+        msg = { type, alt, ids: uavs, ...finalArgs };
+      }
 
-      const responses = await messageHub.startAsyncOperation({
-        type,
-        ids: uavs,
-        ...finalArgs,
-      });
+      const responses = await messageHub.startAsyncOperation(msg);
       processResponses(name, responses, { reportFailure, reportSuccess });
     } catch (error) {
       console.error(error);
@@ -326,3 +327,6 @@ export function createUAVOperationThunks({
     func(uavIds, options);
   });
 }
+
+export const getTakeOff = (state) =>
+  state.uavControl.flyToTargetDialog.takeoffAlt;

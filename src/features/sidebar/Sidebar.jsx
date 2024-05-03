@@ -30,6 +30,7 @@ import ShapeLine from '~/icons/ShapeLine';
 import { hasFeature } from '~/utils/configuration';
 
 import { isSidebarOpen } from './selectors';
+import SwarmIcon from './SwarmIcon';
 
 // NOTE: The scrollbar is not only OS dependent, but also browser dependent.
 const SIDEBAR_OPEN_WIDTH = 180; /* 160px is enough for most platforms, but apparently Windows needs 180px because of the scrollbar */
@@ -67,13 +68,13 @@ const Sidebar = ({ experimentalFeaturesEnabled, isOpen, t, workbench }) => (
     <div style={innerStyle}>
       <ModuleTray allowMultipleSelection vertical workbench={workbench}>
         <Module id='map' icon={<Map />} label={t('view.map')} component='map' />
-        <Module
+        {/* <Module
           id='threeDView'
           icon={<ThreeDRotation />}
           label={t('view.three-d-view')}
           component='three-d-view'
           reorderEnabled={false}
-        />
+        /> */}
         <Module
           id='layers'
           icon={<Layers />}
@@ -177,9 +178,9 @@ const Sidebar = ({ experimentalFeaturesEnabled, isOpen, t, workbench }) => (
           component='camera'
         />
         <Module
-          id='camera'
-          icon={<CameraAltRounded />}
-          label={t('view.swarm')}
+          id='swarm'
+          icon={<SwarmIcon />}
+          label={'Swarm'}
           component='swarm'
         />
       </ModuleTray>

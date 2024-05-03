@@ -163,24 +163,24 @@ export class BatterySettings {
       return percentage > percentageThresholds[BatteryStatus.FULL]
         ? BatteryStatus.FULL
         : percentage > percentageThresholds[BatteryStatus.NEAR_FULL]
-        ? BatteryStatus.NEAR_FULL
-        : percentage > percentageThresholds[BatteryStatus.OK]
-        ? BatteryStatus.OK
-        : percentage > percentageThresholds[BatteryStatus.WARNING]
-        ? BatteryStatus.WARNING
-        : BatteryStatus.ERROR;
+          ? BatteryStatus.NEAR_FULL
+          : percentage > percentageThresholds[BatteryStatus.OK]
+            ? BatteryStatus.OK
+            : percentage > percentageThresholds[BatteryStatus.WARNING]
+              ? BatteryStatus.WARNING
+              : BatteryStatus.ERROR;
     }
 
     const voltagePerCell = this.getVoltagePerCell(voltage, cellCount);
     return voltagePerCell > this.nearFullChargeVoltage
       ? BatteryStatus.FULL
       : voltagePerCell >= this.okVoltageThreshold
-      ? BatteryStatus.NEAR_FULL
-      : voltagePerCell >= this.lowVoltageThreshold
-      ? BatteryStatus.OK
-      : voltagePerCell >= this.criticalVoltageThreshold
-      ? BatteryStatus.WARNING
-      : BatteryStatus.ERROR;
+        ? BatteryStatus.NEAR_FULL
+        : voltagePerCell >= this.lowVoltageThreshold
+          ? BatteryStatus.OK
+          : voltagePerCell >= this.criticalVoltageThreshold
+            ? BatteryStatus.WARNING
+            : BatteryStatus.ERROR;
   };
 
   /**
