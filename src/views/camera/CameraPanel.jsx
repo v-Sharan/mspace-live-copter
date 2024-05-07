@@ -1,19 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import config from 'config';
-import {
-  InputLabel,
-  FormControl,
-  FormControlLabel,
-  FormGroup,
-  FormLabel,
-  Button,
-  Radio,
-  MenuItem,
-  Box,
-  Select,
-  Input,
-  RadioGroup,
-} from '@material-ui/core';
+import { Button, Box } from '@material-ui/core';
 import { showNotification } from '~/features/snackbar/slice';
 import { MessageSemantics } from '~/features/snackbar/types';
 import { openOnLoadImage } from '~/features/show/slice';

@@ -13,13 +13,11 @@ import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { connect } from 'react-redux';
 import { bindActionCreators } from '@reduxjs/toolkit';
-
 import AppBar from '@material-ui/core/AppBar';
 import Box from '@material-ui/core/Box';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 
 import { isThemeDark } from '@skybrush/app-theme-material-ui';
-
 import DroneListItem from './DroneListItem';
 import DroneStatusLine from './DroneStatusLine';
 import MappingEditorToolbar from './MappingEditorToolbar';

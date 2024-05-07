@@ -26,7 +26,7 @@ const LogPanel = ({ items, addTextLog, connectionState }) => {
       })();
     }, 500);
     return () => clearInterval(intervalId);
-  }, [connectionState == ConnectionState.CONNECTED]); // Run once when component mounts
+  }, [connectionState == ConnectionState.CONNECTED]);
 
   return <LogMessageList items={items} />;
 };
