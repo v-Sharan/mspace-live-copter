@@ -28,13 +28,6 @@ import DialogContent from '@material-ui/core/DialogContent';
 import { getSelectedUAVIds } from '~/features/uavs/selectors';
 import { ConnectionState } from '~/model/enums';
 
-const semantics = {
-  SUCCESS: MessageSemantics.SUCCESS,
-  INFO: MessageSemantics.INFO,
-  ERROR: MessageSemantics.ERROR,
-  WARNING: MessageSemantics.WARNING,
-};
-
 const swarm_location = ['DCE', 'TAMBARAM', 'LUCKNOW'];
 const runway = ['Airport', 'Runway', 'Taxiway', 'Apron'];
 
@@ -83,7 +76,7 @@ const SwarmPanel = ({ selectedUAVIds, uavList, connectionState }) => {
         store.dispatch(
           showNotification({
             message: `${message} Message sent`,
-            semantics: semantics.SUCCESS,
+            semantics: MessageSemantics.SUCCESS,
           })
         );
       }
@@ -91,7 +84,7 @@ const SwarmPanel = ({ selectedUAVIds, uavList, connectionState }) => {
       store.dispatch(
         showNotification({
           message: `${message} Command is Failed`,
-          semantics: semantics.ERROR,
+          semantics: MessageSemantics.ERROR,
         })
       );
     }

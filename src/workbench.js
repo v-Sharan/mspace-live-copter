@@ -143,6 +143,11 @@ export const componentRegistry = {
     label: 'Swarm Panel',
     detachable: true,
   },
+  spare: {
+    component: views.SpareDronePanel,
+    label: 'Spare Drone',
+    detachable: true,
+  },
   map: {
     component: MapView,
     label: 'Map',

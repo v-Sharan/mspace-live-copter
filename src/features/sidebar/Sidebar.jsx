@@ -158,13 +158,13 @@ const Sidebar = ({ experimentalFeaturesEnabled, isOpen, t, workbench }) => (
           label={t('view.field-notes')}
           component='field-notes'
         />
-        <Module
+        {/* <Module
           id='log'
           badge={<LogStatusBadge />}
           icon={<FormatListBulleted />}
           label={t('view.log-panel')}
           component='log-panel'
-        />
+        /> */}
         {/* <Module
           id='strike'
           icon={<FormatListBulleted />}
@@ -178,11 +178,17 @@ const Sidebar = ({ experimentalFeaturesEnabled, isOpen, t, workbench }) => (
           component='camera'
         />
         <Module
+          id='spare-drone'
+          icon={<CameraAltRounded />}
+          label='Spare Drone'
+          component={'spare'}
+        />
+        {/* <Module
           id='swarm'
           icon={<SwarmIcon />}
           label={'Swarm'}
           component='swarm'
-        />
+        /> */}
       </ModuleTray>
     </div>
     {isOpen && (

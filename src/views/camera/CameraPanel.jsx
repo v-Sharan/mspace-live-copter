@@ -56,6 +56,12 @@ const CameraPanel = ({ onLoadImage }) => {
         }
       } catch (e) {
         console.log(e);
+        store.dispatch(
+          showNotification({
+            message: `Connection to the Camera ${urls[i].id} is Failed in Catch`,
+            semantics: semantics.ERROR,
+          })
+        );
       }
     })();
   };
@@ -63,7 +69,12 @@ const CameraPanel = ({ onLoadImage }) => {
   useEffect(() => {
     (async () => {
       let urls = config['camera_url'];
-      console.log(urls);
+      store.dispatch(
+        showNotification({
+          message: `${urls?.length} length of the urls`,
+          semantics: semantics.SUCCESS,
+        })
+      );
       try {
         for (let i in urls) {
           const res = await fetch(
@@ -226,9 +237,6 @@ const CameraPanel = ({ onLoadImage }) => {
   );
 };
 
-// export default connect({
-//   onLoadImage: openOnLoadImage,
-// })(CameraPanel);
 export default connect(
   // mapStateToProps
   (state) => ({

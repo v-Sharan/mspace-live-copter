@@ -96,13 +96,19 @@ const MapViewLayersPresentation = ({
 
   const [imageName, setImageName] = useState([]);
 
-  const ground_ip = '192.168.6.194';
+  const ground_ip = '192.168.6.215';
 
   useEffect(() => {
     if (!Load) return;
     (async () => {
       try {
         const res = await fetch(`http://${ground_ip}:8000/get_image_list`);
+        store.dispatch(
+          showNotification({
+            message: `request sent`,
+            semantics: semantics.SUCCESS,
+          })
+        );
         if (!res.ok) {
           store.dispatch(
             showNotification({
@@ -113,9 +119,8 @@ const MapViewLayersPresentation = ({
           return;
         }
         const data = await res.json();
-        setImageName((prev) => [...prev, ...data.result]);
+        setImageName(data?.result);
         dispatch(closeOnLoadImage());
-        console.log(data.result);
         store.dispatch(
           showNotification({
             message: 'Image Loaded Succesfully',
@@ -146,25 +151,25 @@ const MapViewLayersPresentation = ({
     }
   }
 
-  // if (imageName.length != 0) {
-  //   for (const name in imageName) {
-  //     const location = imageName[name].split('.jpg')[0].split('_');
+  if (imageName.length != 0) {
+    for (const name in imageName) {
+      const location = imageName[name].split('.jpg')[0].split('_');
 
-  //     const Cutomlayer = {
-  //       parameters: {
-  //         image: {
-  //           data: `http://${ground_ip}:8000/get_image/${imageName[name]}`,
-  //         },
-  //         transform: {
-  //           position: { lon: location[10], lat: location[9] },
-  //           angle: 0,
-  //           scale: 5,
-  //         },
-  //       },
-  //     };
-  //     renderedLayers.push(<ImageLayer layer={Cutomlayer} zIndex={6} />);
-  //   }
-  // }
+      const Cutomlayer = {
+        parameters: {
+          image: {
+            data: `http://${ground_ip}:8000/get_image/${imageName[name]}`,
+          },
+          transform: {
+            position: { lon: location[10], lat: location[9] },
+            angle: 0,
+            scale: 5,
+          },
+        },
+      };
+      renderedLayers.push(<ImageLayer layer={Cutomlayer} zIndex={6} />);
+    }
+  }
 
   return renderedLayers;
 };

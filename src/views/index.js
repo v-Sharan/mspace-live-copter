@@ -21,6 +21,7 @@ import ThreeDTopLevelView from './three-d';
 import StrikePanel from './stike/StrikePanel';
 import CameraPanel from './camera/CameraPanel';
 import SwarmPanel from './swarm/SwarmPanel';
+import SpareDronePanel from './spareDrone/SpareDronePanel';
 
 /* MapView not included as it is loaded lazily */
 
@@ -43,6 +44,7 @@ const views = {
   StrikePanel,
   CameraPanel,
   SwarmPanel,
+  SpareDronePanel,
 };
 
 export default views;
