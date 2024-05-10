@@ -13,6 +13,8 @@ import { showNotification } from '~/features/snackbar/slice';
 import { MessageSemantics } from '~/features/snackbar/types';
 import messageHub from '~/message-hub';
 import store from '~/store';
+import { getPreferredCommunicationChannelIndex } from '~/features/mission/selectors';
+import { getUAVIdList } from '~/features/uavs/selectors';
 
 import makeLogger from './logging';
 
@@ -85,7 +87,6 @@ const performMassOperation =
   ({
     type,
     name,
-    alt = 2.5,
     mapper = undefined,
     reportFailure = true,
     reportSuccess = true,
@@ -118,8 +119,21 @@ const performMassOperation =
       }
       let msg = { type, ids: uavs, ...finalArgs };
       if (type == 'UAV-TAKEOFF') {
-        alt = getTakeOff(store.getState());
-        msg = { type, alt, ids: uavs, ...finalArgs };
+        msg = {
+          type,
+          alt: getTakeOff(store.getState()),
+          ids: uavs,
+          ...finalArgs,
+        };
+      }
+
+      if (type == 'X-UAV-MISSION') {
+        msg = {
+          type,
+          ids: uavs,
+          ...finalArgs,
+          ...getMissionState(store.getState()),
+        };
       }
 
       const responses = await messageHub.startAsyncOperation(msg);
@@ -167,6 +181,11 @@ export const takeoffUAVs = performMassOperation({
 export const guidedMode = performMassOperation({
   type: 'X-UAV-GUIDED',
   name: 'Guided mode command',
+});
+
+export const UploadMission = performMassOperation({
+  type: 'X-UAV-MISSION',
+  name: 'Upload Mission Command',
 });
 
 export const Socket = performMassOperation({
@@ -285,6 +304,7 @@ const OPERATION_MAP = {
   wakeUp: wakeUpUAVs,
   guided: guidedMode,
   socket: Socket,
+  uploadMission: UploadMission,
 };
 
 /**
@@ -330,3 +350,5 @@ export function createUAVOperationThunks({
 
 export const getTakeOff = (state) =>
   state.uavControl.flyToTargetDialog.takeoffAlt;
+
+export const getMissionState = (state) => state.uavControl.missionUpload;

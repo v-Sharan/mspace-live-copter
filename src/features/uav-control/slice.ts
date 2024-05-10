@@ -16,6 +16,10 @@ type UAVControlSliceState = ReadonlyDeep<{
     takeoffAlt: number;
     initialValues: FlyToTargetParameters;
   };
+  missionUpload: {
+    uav: number;
+    mission: number;
+  };
 }>;
 
 const initialState: UAVControlSliceState = {
@@ -28,6 +32,10 @@ const initialState: UAVControlSliceState = {
       altitude: 0,
     },
   },
+  missionUpload: {
+    uav: 0,
+    mission: 0,
+  },
 };
 
 const { actions, reducer } = createSlice({
@@ -39,7 +47,6 @@ const { actions, reducer } = createSlice({
     }),
 
     changeTakeOffAlt(state, action) {
-      console.log(action.payload);
       state.flyToTargetDialog.takeoffAlt = action.payload;
     },
 
@@ -52,6 +59,14 @@ const { actions, reducer } = createSlice({
       state.flyToTargetDialog.initialValues = { coords, mode, altitude };
       state.flyToTargetDialog.open = true;
     },
+
+    updateUavNumberToMission(state, action) {
+      state.missionUpload.uav = action.payload;
+    },
+
+    updateMissionNumberToMission(state, action) {
+      state.missionUpload.mission = action.payload;
+    },
   },
 });
 
@@ -59,6 +74,8 @@ export const {
   closeFlyToTargetDialog,
   openFlyToTargetDialog,
   changeTakeOffAlt,
+  updateUavNumberToMission,
+  updateMissionNumberToMission,
 } = actions;
 
 export default reducer;

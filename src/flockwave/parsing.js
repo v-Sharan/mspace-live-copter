@@ -47,6 +47,7 @@ const MESSAGES_WITH_RECEIPTS = {
   'UAV-WAKEUP': true,
   'X-UAV-GUIDED': true,
   'X-UAV-socket': true,
+  'X-UAV-MISSION': true,
 };
 
 /**
