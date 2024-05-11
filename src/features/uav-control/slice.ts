@@ -19,6 +19,7 @@ type UAVControlSliceState = ReadonlyDeep<{
   missionUpload: {
     uav: number;
     mission: number;
+    alt: number;
   };
 }>;
 
@@ -35,6 +36,7 @@ const initialState: UAVControlSliceState = {
   missionUpload: {
     uav: 0,
     mission: 0,
+    alt: 0,
   },
 };
 
@@ -67,6 +69,10 @@ const { actions, reducer } = createSlice({
     updateMissionNumberToMission(state, action) {
       state.missionUpload.mission = action.payload;
     },
+
+    updateMissionAltToMission(state, action) {
+      state.missionUpload.alt = action.payload;
+    },
   },
 });
 
@@ -76,6 +82,7 @@ export const {
   changeTakeOffAlt,
   updateUavNumberToMission,
   updateMissionNumberToMission,
+  updateMissionAltToMission,
 } = actions;
 
 export default reducer;

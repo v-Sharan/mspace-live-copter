@@ -21,6 +21,7 @@ import PlayArrow from '@material-ui/icons/PlayArrow';
 import Refresh from '@material-ui/icons/Refresh';
 import WbSunny from '@material-ui/icons/WbSunny';
 import GuidedMode from '@material-ui/icons/Bookmark';
+import AutoMode from '@material-ui/icons/Autorenew';
 import { changeTakeOffAlt } from '~/features/uav-control/slice';
 import { TooltipWithContainerFromContext as Tooltip } from '~/containerContext';
 
@@ -73,6 +74,7 @@ const UAVOperationsButtonGroup = ({
     turnMotorsOn,
     wakeUp,
     guided,
+    automode,
   } = bindActionCreators(
     createUAVOperationThunks({
       getTargetedUAVIds(state) {
@@ -161,6 +163,15 @@ const UAVOperationsButtonGroup = ({
           onClick={guided}
         >
           <GuidedMode fontSize={fontSize} />
+        </IconButton>
+      </Tooltip>
+      <Tooltip content={'Auto Mode'}>
+        <IconButton
+          disabled={isSelectionEmpty}
+          size={iconSize}
+          onClick={automode}
+        >
+          <AutoMode fontSize={fontSize} />
         </IconButton>
       </Tooltip>
 

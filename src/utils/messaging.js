@@ -127,15 +127,6 @@ const performMassOperation =
         };
       }
 
-      if (type == 'X-UAV-MISSION') {
-        msg = {
-          type,
-          ids: uavs,
-          ...finalArgs,
-          ...getMissionState(store.getState()),
-        };
-      }
-
       const responses = await messageHub.startAsyncOperation(msg);
       processResponses(name, responses, { reportFailure, reportSuccess });
     } catch (error) {
@@ -183,14 +174,9 @@ export const guidedMode = performMassOperation({
   name: 'Guided mode command',
 });
 
-export const UploadMission = performMassOperation({
-  type: 'X-UAV-MISSION',
-  name: 'Upload Mission Command',
-});
-
-export const Socket = performMassOperation({
-  type: 'X-UAV-socket',
-  name: 'Guided mode command',
+export const AutoMode = performMassOperation({
+  type: 'X-UAV-AUTO',
+  name: 'Auto mode command',
 });
 
 export const landUAVs = performMassOperation({
@@ -303,8 +289,7 @@ const OPERATION_MAP = {
   turnMotorsOn: turnMotorsOnForUAVs,
   wakeUp: wakeUpUAVs,
   guided: guidedMode,
-  socket: Socket,
-  uploadMission: UploadMission,
+  automode: AutoMode,
 };
 
 /**
