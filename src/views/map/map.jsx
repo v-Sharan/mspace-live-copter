@@ -6,8 +6,8 @@ import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { Map, View } from '@collmot/ol-react';
 import Drone from '~/../assets/img/drone-x-black-32x32.png';
-import { showNotification } from '~/features/snackbar/slice';
-import { MessageSemantics } from '~/features/snackbar/types';
+// import { showNotification } from '~/features/snackbar/slice';
+// import { MessageSemantics } from '~/features/snackbar/types';
 // import * as Condition from './conditions';
 // import {
 //   SelectNearestFeature,
@@ -41,7 +41,10 @@ import {
   handleFeatureUpdatesInOpenLayers,
   isFeatureTransformable,
 } from '~/model/openlayers';
-import { updateMapViewSettings } from '~/features/map/view';
+import {
+  updateMapViewSettings,
+  updateCurrentFrameTime,
+} from '~/features/map/view';
 import {
   addToSelection,
   setSelection,
@@ -54,6 +57,7 @@ import { getVisibleLayersInOrder } from '~/selectors/ordered';
 import {
   getMapViewCenterPosition,
   getMapViewRotationAngle,
+  getCurrentFrameTime,
 } from '~/selectors/map';
 import { getSelection } from '~/selectors/selection';
 // import { hasFeature } from '~/utils/configuration';
@@ -76,30 +80,31 @@ import VideoComponent from './VideoComponent';
  *
  * @returns {JSX.Node[]}  the layers of the map
  */
+const locData = [
+  { lat: 12.949013, lon: 80.141617 },
+  { lat: 12.949079, lon: 80.141681 },
+  { lat: 12.949133, lon: 80.141734 },
+  { lat: 12.94918, lon: 80.141786 },
+  { lat: 12.94914, lon: 80.141864 },
+  { lat: 12.949069, lon: 80.14182 },
+];
 const MapViewLayersPresentation = ({
   layers,
   onFeaturesModified,
   selectedTool,
   zoom,
+  currentFrameTime,
 }) => {
   let zIndex = 0;
   const renderedLayers = [];
 
-  const locData = [
-    { lat: 12.949079, lon: 80.141681 },
-    { lat: 12.949133, lon: 80.141734 },
-    { lat: 12.94918, lon: 80.141786 },
-    { lat: 12.94914, lon: 80.141864 },
-    { lat: 12.949069, lon: 80.14182 },
-  ];
-
   const [loc, setLoc] = useState({
-    lat: 12.949013,
-    lon: 80.141617,
+    lat: locData[1].lat,
+    lon: locData[0].lon,
   });
 
   // useEffect(() => {
-  //   let index = 0;
+  //   let index = 1;
   //   const intervalId = setInterval(() => {
   //     setLoc(locData[index]);
   //     index = (index + 1) % locData.length;
@@ -121,26 +126,6 @@ const MapViewLayersPresentation = ({
       zIndex++;
     }
   }
-
-  // if (imageName.length != 0) {
-  //   for (const name in imageName) {
-  //     const location = imageName[name].split('.jpg')[0].split('_');
-
-  //     const Cutomlayer = {
-  //       parameters: {
-  //         image: {
-  //           data: `http://${ground_ip}:8000/get_image/${imageName[name]}`,
-  //         },
-  //         transform: {
-  //           position: { lon: location[10], lat: location[9] },
-  //           angle: 0,
-  //           scale: 5,
-  //         },
-  //       },
-  //     };
-  //     renderedLayers.push(<ImageLayer layer={Cutomlayer} zIndex={6} />);
-  //   }
-  // }
 
   const Cutomlayer = {
     parameters: {
@@ -182,6 +167,7 @@ const MapViewLayers = connect(
     layers: getVisibleLayersInOrder(state),
     selectedTool: getSelectedTool(state),
     zoom: state.map.view.zoom,
+    currentFrameTime: getCurrentFrameTime(state),
   })
 )(MapViewLayersPresentation);
 
@@ -271,7 +257,8 @@ class MapViewPresentation extends React.Component {
   }
 
   render() {
-    const { center, rotation, selectedTool, zoom } = this.props;
+    const { rotation, selectedTool, zoom, onChangeVideoFrame } = this.props;
+    const center = [locData[0].lon, locData[0].lat];
     const view = (
       <View
         center={mapViewCoordinateFromLonLat(center)}
@@ -329,7 +316,7 @@ class MapViewPresentation extends React.Component {
             {/* <MapContextMenu /> */}
             {/* </ShowContextMenu> */}
           </Map>
-          <VideoComponent />
+          <VideoComponent handleTime={onChangeVideoFrame} />
         </div>
       </NearestItemTooltip>
     );

@@ -28,12 +28,14 @@ type MapViewSliceState = ReadonlyDeep<{
   position: Coordinate2D;
   angle: string;
   zoom: number;
+  currentFrameTime: number;
 }>;
 
 const initialState: MapViewSliceState = {
   position: [18.915125, 47.486305], // Sensible default: Farkashegy Airfield
   angle: '0',
   zoom: 17,
+  currentFrameTime: 0,
 };
 
 const { actions, reducer } = createSlice({
@@ -53,9 +55,15 @@ const { actions, reducer } = createSlice({
       state.angle = normalizeAngle(angle);
       state.zoom = Math.max(Math.min(zoom, 20), 0);
     },
+    updateCurrentFrameTime(
+      state,
+      action: PayloadAction<{ currentFrameTime: number }>
+    ) {
+      state.currentFrameTime = action.payload.currentFrameTime;
+    },
   },
 });
 
-export const { updateMapViewSettings } = actions;
+export const { updateMapViewSettings, updateCurrentFrameTime } = actions;
 
 export default reducer;

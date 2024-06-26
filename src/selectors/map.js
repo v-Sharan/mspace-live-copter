@@ -27,6 +27,11 @@ export const getFlatEarthCoordinateTransformer = createSelector(
  * Selector that returns the center position of the map view in lon-lat format.
  */
 export const getMapViewCenterPosition = (state) => state.map.view.position;
+/**
+ *
+ * Selector that returns the CurrentFrameTime in LogVideo
+ */
+export const getCurrentFrameTime = (state) => state.map.view.currentFrameTime;
 
 /**
  * Selector that returns the rotation angle of the map view, cast into a
