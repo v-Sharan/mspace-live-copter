@@ -19,10 +19,10 @@ import ShowControlPanel from './show-control';
 import UAVList from './uavs';
 import ThreeDTopLevelView from './three-d';
 import StrikePanel from './stike/StrikePanel';
-import CameraPanel from './camera/CameraPanel';
+import CameraPanel from './camera';
 import SwarmPanel from './swarm/SwarmPanel';
 import SpareDronePanel from './spareDrone/SpareDronePanel';
-
+import LogVideo from './map/map';
 /* MapView not included as it is loaded lazily */
 
 const views = {
@@ -45,6 +45,7 @@ const views = {
   CameraPanel,
   SwarmPanel,
   SpareDronePanel,
+  LogVideo,
 };
 
 export default views;

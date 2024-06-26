@@ -9,7 +9,8 @@ import Box from '@material-ui/core/Box';
 import Image from '@material-ui/icons/Image';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import Skeleton from '@material-ui/lab/Skeleton';
-
+import { showNotification } from '~/features/snackbar/slice';
+import { MessageSemantics } from '~/features/snackbar/types';
 import FileButton from '~/components/FileButton';
 import {
   LatitudeField,
@@ -23,6 +24,7 @@ import { getMapViewCenterPosition } from '~/selectors/map';
 import { mapViewCoordinateFromLonLat } from '~/utils/geography';
 import { toRadians } from '~/utils/math';
 import { finite, join, positive, required } from '~/utils/validation';
+import { useSelector, useDispatch } from 'react-redux';
 
 const AutoSaveOnBlur = ({ active, save }) => {
   const prevActive = usePrevious(active);
@@ -236,6 +238,13 @@ const ImageLayerPresentation = ({
   },
   zIndex,
 }) => {
+  const dispatch = useDispatch();
+  // dispatch(
+  //   showNotification({
+  //     message: scale,
+  //     semantics: MessageSemantics.INFO,
+  //   })
+  // );
   return position ? (
     <layer.GeoImage zIndex={zIndex}>
       <source.GeoImage

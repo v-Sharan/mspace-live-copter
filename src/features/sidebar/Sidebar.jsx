@@ -16,7 +16,7 @@ import Storage from '@material-ui/icons/Storage';
 import ThreeDRotation from '@material-ui/icons/ThreeDRotation';
 import WbSunny from '@material-ui/icons/WbSunny';
 import { CameraAltRounded } from '@material-ui/icons';
-
+import Gimbal from './Gimbal';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { withTranslation } from 'react-i18next';
@@ -122,14 +122,14 @@ const Sidebar = ({ experimentalFeaturesEnabled, isOpen, t, workbench }) => (
             component='show-control'
           />
         )}
-        {hasShowControl && (
+        {/* {hasShowControl && (
           <Module
             id='lights'
             icon={<WbSunny />}
             label={t('view.light-control')}
             component='light-control'
           />
-        )}
+        )} */}
         {hasShowControl && <hr />}
         <Module
           id='clocks'
@@ -165,12 +165,18 @@ const Sidebar = ({ experimentalFeaturesEnabled, isOpen, t, workbench }) => (
           label={t('view.log-panel')}
           component='log-panel'
         /> */}
-        {/* <Module
+        <Module
           id='strike'
-          icon={<FormatListBulleted />}
+          icon={<Gimbal />}
           label={t('view.strike')}
           component='strike'
-        /> */}
+        />
+        <Module
+          id='strike'
+          icon={<Gimbal />}
+          label={'Log video'}
+          component='logvideo'
+        />
         <Module
           id='camera'
           icon={<CameraAltRounded />}
@@ -179,7 +185,7 @@ const Sidebar = ({ experimentalFeaturesEnabled, isOpen, t, workbench }) => (
         />
         <Module
           id='spare-drone'
-          icon={<CameraAltRounded />}
+          icon={<SwarmIcon />}
           label='Spare Drone'
           component={'spare'}
         />

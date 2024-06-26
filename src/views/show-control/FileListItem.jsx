@@ -15,7 +15,8 @@ import MenuItem from '@material-ui/core/MenuItem';
 import { Button, Select } from '@material-ui/core';
 
 import { details } from './details';
-import tam5Single from '~/skyc/tambaram-5-alt.json';
+import tam5Single from '~/skyc/jas.json';
+// import tam5Single from '~/skyc/tambaram-5-alt.json';
 import DceRoad from '~/skyc/dc-3-new-loc.json';
 
 import {
@@ -79,7 +80,7 @@ const FileListItem = ({
 
   const onSubmit = () => {
     // if (!accepts(dt.file)) return;
-    onHandleSelection(DceRoad);
+    onHandleSelection(tam5Single);
     SetEditig((prev) => !prev);
   };
 

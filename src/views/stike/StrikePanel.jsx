@@ -1,159 +1,198 @@
-import React, { useState } from 'react';
-import config from 'config';
-import {
-  InputLabel,
-  FormControl,
-  FormControlLabel,
-  FormGroup,
-  FormLabel,
-  Button,
-  Radio,
-  MenuItem,
-  Box,
-  Select,
-  Input,
-  RadioGroup,
-} from '@material-ui/core';
+import React, { useEffect, useRef, useState } from 'react';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Radio from '@material-ui/core/Radio';
+import RadioGroup from '@material-ui/core/RadioGroup';
+import './index.css';
+import messageHub from '~/message-hub';
+import store from '~/store';
+import { showNotification } from '~/features/snackbar/actions';
+import { MessageSemantics } from '~/features/snackbar/types';
+import { Button } from '@material-ui/core';
 
-const StrikePanel = () => {
-  const [MSG, setMSG] = useState({
+const { dispatch } = store;
+
+const video = [
+  {
     id: 1,
-    latitude: 0.0,
-    longitude: 0.0,
-    withRTL: false,
-  });
+    name: 'Camera 1',
+    url: 'http://192.168.6.21:8000/video_1',
+    ip: '192.168.6.131',
+  },
+  {
+    id: 2,
+    name: 'Camera 2',
+    url: 'http://192.168.6.21:8000/video_2',
+    ip: '192.168.6.161',
+  },
+  { id: 3, name: 'All Camera', url: 'http://192.168.6.21:8000/all_camera' },
+];
 
-  const url = config['strike_url'];
+const SpareDronePanel = () => {
+  const [camId, setCamId] = useState(video[0].id);
+  const [camUrl, setCamUrl] = useState(video[0].url);
+  const [allCamera, setAllCamera] = useState(false);
+  const [allCamUrl, setAllCamUrl] = useState([]);
+  const [gimbal, setGimbal] = useState('');
+  const [recState, SetRecState] = useState(false);
 
-  const handleSubmit = () => {
-    const req_url = url[MSG.id - 1];
-    if (!MSG.latitude && !MSG.longitude) {
-      console.log(MSG.latitude);
+  useEffect(() => {
+    dispatch(
+      showNotification({
+        message: camUrl,
+        semantics: MessageSemantics.SUCCESS,
+      })
+    );
+  }, [camUrl]);
+
+  const onCameraChange = async (id, url, ip) => {
+    if (id == 3) {
+      setAllCamera(true);
+      setCamId(id);
+      try {
+        const res = await fetch(url);
+        const data = await res.json();
+        setAllCamUrl(data?.result);
+        return;
+      } catch (e) {
+        console.log(e);
+        dispatch(
+          showNotification({
+            message: `Something went wrong`,
+            semantics: MessageSemantics.ERROR,
+          })
+        );
+      }
     }
-    console.log(req_url, MSG);
+    setAllCamera(false);
+    setCamId(id);
+    setCamUrl(url);
+    setGimbal(ip);
   };
 
-  const handleAbort = () => {
-    console.log('About');
+  const onButtonPress = async (msg) => {
+    try {
+      const res = await messageHub.sendMessage({
+        type: 'X-Camera-MISSION',
+        message: msg,
+        ip: gimbal,
+      });
+
+      if (Boolean(res?.body?.message)) {
+        dispatch(
+          showNotification({
+            message: `${msg} Message sent`,
+            semantics: MessageSemantics.SUCCESS,
+          })
+        );
+      }
+    } catch (e) {
+      dispatch(
+        showNotification({
+          message: `${e} Command is Failed`,
+          semantics: MessageSemantics.ERROR,
+        })
+      );
+    }
   };
+
+  const sourceRadioButtons = video.map((source) => (
+    <FormControlLabel
+      key={source.name}
+      value={source.url}
+      label={source.name}
+      style={{ marginTop: 5 }}
+      control={<Radio checked={camId === source.id} />}
+      onChange={onCameraChange.bind(this, source.id, source.url, source.ip)}
+    />
+  ));
 
   return (
-    <Box style={{ margin: 10, gap: 20 }}>
-      <FormGroup style={{ display: 'flex', flexDirection: 'column', gap: 15 }}>
-        <Box style={{ display: 'flex', gap: 20, alignItems: 'center' }}>
-          <FormControl fullWidth variant='standard'>
-            <InputLabel id='drone-id'>Choose Drone:</InputLabel>
-            <Select
-              style={{ padding: 5 }}
-              value={MSG.id}
-              labelId='drone-id'
-              onChange={({ target: { value } }) =>
-                setMSG((prev) => {
-                  return { ...prev, id: value };
-                })
-              }
-            >
-              {url?.length != 0 &&
-                url.map((item) => (
-                  <MenuItem value={item.id}>{item.id}</MenuItem>
-                ))}
-            </Select>
-          </FormControl>
-          {/* <FormControl fullWidth variant='standard'>
-            <InputLabel id='drone-id'>Heading:</InputLabel>
-            <Input
-              style={{ padding: 5 }}
-              type='number'
-              value={MSG.heading}
-              onChange={({ target: { value } }) =>
-                setMSG((prev) => {
-                  return { ...prev, heading: value };
-                })
-              }
-            />
-          </FormControl> */}
-        </Box>
-        <Box style={{ display: 'flex', gap: 20, alignItems: 'center' }}>
-          <FormControl fullWidth variant='standard'>
-            <InputLabel id='drone-id'>Target Latitude:</InputLabel>
-            <Input
-              style={{ padding: 5 }}
-              type='number'
-              value={MSG.latitude}
-              onChange={({ target: { value } }) =>
-                setMSG((prev) => {
-                  return { ...prev, latitude: value };
-                })
-              }
-            />
-          </FormControl>
-          <FormControl fullWidth variant='standard'>
-            <InputLabel id='drone-id'>Target Longitude:</InputLabel>
-            <Input
-              style={{ padding: 5 }}
-              type='number'
-              value={MSG.longitude}
-              onChange={({ target: { value } }) =>
-                setMSG((prev) => {
-                  return { ...prev, longitude: value };
-                })
-              }
-            />
-          </FormControl>
-        </Box>
-
-        <FormControl
-          fullWidth
-          variant='standard'
+    <div>
+      {allCamera ? (
+        camId == 3 &&
+        allCamUrl?.length != 0 && (
+          <div className='allcamera'>
+            {allCamUrl?.map(({ url, ip }) => (
+              <img
+                style={{
+                  // position: 'absolute',
+                  width: '50%',
+                  height: '50%',
+                  cursor: 'pointer',
+                }}
+                onClick={() => {
+                  dispatch(
+                    showNotification({
+                      message: `Gimabal ip set to ${ip}`,
+                      semantics: MessageSemantics.SUCCESS,
+                    })
+                  );
+                  setGimbal(ip);
+                }}
+                src={url}
+              />
+            ))}
+          </div>
+        )
+      ) : (
+        <img
           style={{
-            display: 'flex',
-            flexDirection: 'row',
-            gap: 10,
-            alignItems: 'center',
+            // position: 'absolute',
+            width: '50%',
+            height: '50%',
           }}
+          src={camUrl}
+        />
+      )}
+      <RadioGroup
+        key='cameraPanel'
+        name='source.camera'
+        style={{
+          display: 'flex',
+        }}
+      >
+        {sourceRadioButtons}
+      </RadioGroup>
+      <h1>Gimbal Control</h1>
+      <Button
+        variant='contained'
+        onClick={() => {
+          onButtonPress('rec');
+          SetRecState((prev) => !prev);
+        }}
+      >
+        {recState ? 'Stop Recording' : 'Start Recording'}
+      </Button>
+      <div className='joystick'>
+        <button
+          className='joystick-button up'
+          onClick={() => onButtonPress('up')}
         >
-          <FormLabel id='form-position'>RTL :</FormLabel>
-          <RadioGroup aria-labelledby='form-position' row>
-            <FormControlLabel
-              label={'With RTL'}
-              control={<Radio checked={MSG.withRTL} />}
-              onChange={() =>
-                setMSG((prev) => {
-                  return { ...prev, withRTL: true };
-                })
-              }
-            />
-            <FormControlLabel
-              label={'Without RTL'}
-              control={<Radio checked={!MSG.withRTL} />}
-              onChange={() =>
-                setMSG((prev) => {
-                  return { ...prev, withRTL: false };
-                })
-              }
-            />
-          </RadioGroup>
-        </FormControl>
-        <Button onClick={handleSubmit} variant='contained'>
-          Submit
-        </Button>
-        <Button onClick={handleAbort} variant='contained'>
-          Abort
-        </Button>
-      </FormGroup>
-    </Box>
+          ↑
+        </button>
+        <div className='middle-row'>
+          <button
+            className='joystick-button left'
+            onClick={() => onButtonPress('left')}
+          >
+            ←
+          </button>
+          <button
+            className='joystick-button right'
+            onClick={() => onButtonPress('right')}
+          >
+            →
+          </button>
+        </div>
+        <button
+          className='joystick-button down'
+          onClick={() => onButtonPress('down')}
+        >
+          ↓
+        </button>
+      </div>
+    </div>
   );
 };
 
-export default StrikePanel;
-
-{
-  /*
-drone number --> done
-heading,height
-target lat,lon
-with RTL,without RTL
-Strike
-Abort mission
-*/
-}
+export default SpareDronePanel;

@@ -133,6 +133,11 @@ export const componentRegistry = {
     label: 'Strike',
     detachable: true,
   },
+  logvideo: {
+    component: views.LogVideo,
+    label: 'LogVideo',
+    detachable: true,
+  },
   camera: {
     component: views.CameraPanel,
     label: 'Camera GUI',
