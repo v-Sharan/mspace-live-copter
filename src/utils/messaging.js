@@ -179,6 +179,11 @@ export const AutoMode = performMassOperation({
   name: 'Auto mode command',
 });
 
+export const HomeLock = performMassOperation({
+  type: 'X-HOME-LOCK',
+  name: 'HomeLock command',
+});
+
 export const landUAVs = performMassOperation({
   type: 'UAV-LAND',
   name: 'Landing command',
@@ -290,6 +295,7 @@ const OPERATION_MAP = {
   wakeUp: wakeUpUAVs,
   guided: guidedMode,
   automode: AutoMode,
+  homelock: HomeLock,
 };
 
 /**

@@ -4,8 +4,6 @@ import { showNotification } from '~/features/snackbar/slice';
 import { MessageSemantics } from '~/features/snackbar/types';
 // import VideoSample from '~/../assets/sample.mp4';
 
-const { dispatch } = store;
-
 const VideoComponent = ({ handleTime }) => {
   const videoRef = useRef(null);
 

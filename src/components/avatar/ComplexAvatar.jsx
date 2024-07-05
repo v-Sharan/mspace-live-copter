@@ -13,6 +13,11 @@ import StatusPill from '~/components/StatusPill';
 
 import SecondaryStatusLight from './SecondaryStatusLight';
 
+import store from '~/store';
+import { showNotification } from '~/features/snackbar/actions';
+import { MessageSemantics } from '~/features/snackbar/types';
+const { dispatch } = store;
+
 const useStyles = makeStyles(
   (theme) => ({
     avatarWrapper: {
@@ -97,6 +102,7 @@ const ComplexAvatar = ({
   status,
   text,
   textSemantics,
+  airspeed,
 }) => {
   const classes = useStyles();
 
@@ -137,6 +143,9 @@ const ComplexAvatar = ({
       </div>
       {(details || text) && (
         <StatusPill status={textSemantics}>{details || text}</StatusPill>
+      )}
+      {airspeed && (
+        <StatusPill status={textSemantics}>{airspeed} m/s</StatusPill>
       )}
       {batteryStatus && (
         <BatteryIndicator formatter={batteryFormatter} {...batteryStatus} />

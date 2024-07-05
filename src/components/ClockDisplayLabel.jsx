@@ -1,11 +1,11 @@
 import isNil from 'lodash-es/isNil';
 import PropTypes from 'prop-types';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { useHarmonicIntervalFn, useUpdate } from 'react-use';
-import { showNotification } from '~/features/snackbar/actions';
-import { MessageSemantics } from '~/features/snackbar/types';
-import store from '~/store';
+// import { showNotification } from '~/features/snackbar/actions';
+// import { MessageSemantics } from '~/features/snackbar/types';
+// import store from '~/store';
 import { getClockById } from '~/features/clocks/selectors';
 import {
   formatTicksOnClock,
@@ -28,30 +28,7 @@ const ClockDisplayLabel = ({
   updateInterval,
   ...rest
 }) => {
-  const { running, ticksPerSecond } = clock || {};
-  const uavs = flock.getAllUAVs();
-
-  useEffect(() => {
-    // if (uavs?.length == 0) return;
-    const intervalId = setInterval(() => {
-      store.dispatch(
-        showNotification({
-          message: `${uavs?.length}`,
-          semantics: MessageSemantics.SUCCESS,
-        })
-      );
-    }, 1000);
-    // for (const uav of uavs) {
-    //   store.dispatch(
-    //     showNotification({
-    //       message: `${uav.lat} ${uav.lon}`,
-    //       semantics: MessageSemantics.SUCCESS,
-    //     })
-    //   );
-    // }
-    return () => clearInterval(intervalId);
-  }, []);
-
+  const { running } = clock || {};
   const timestamp =
     Date.now() + (affectedByClockSkew && !isNil(clockSkew) ? clockSkew : 0);
   const ticks = clock ? getTickCountOnClockAt(clock, timestamp) : undefined;
@@ -60,19 +37,9 @@ const ClockDisplayLabel = ({
       ? emptyText
       : formatTicksOnClock(ticks, clock, { format });
   const update = useUpdate();
-  let seconds = ticks / ticksPerSecond;
   useHarmonicIntervalFn(update, running ? updateInterval : null);
 
-  let average_coverage = 3 * seconds;
-
-  return (
-    <div>
-      Coverage Area Percentage {average_coverage}
-      <div>
-        <span {...rest}>{formattedTime}</span>
-      </div>
-    </div>
-  );
+  return <span {...rest}>{formattedTime}</span>;
 };
 
 ClockDisplayLabel.propTypes = {

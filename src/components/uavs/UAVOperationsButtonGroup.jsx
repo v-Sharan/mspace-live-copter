@@ -22,6 +22,7 @@ import Refresh from '@material-ui/icons/Refresh';
 import WbSunny from '@material-ui/icons/WbSunny';
 import GuidedMode from '@material-ui/icons/Bookmark';
 import AutoMode from '@material-ui/icons/Autorenew';
+import HomeLock from '@material-ui/icons/HomeWorkTwoTone';
 import { changeTakeOffAlt } from '~/features/uav-control/slice';
 import { TooltipWithContainerFromContext as Tooltip } from '~/containerContext';
 
@@ -75,6 +76,7 @@ const UAVOperationsButtonGroup = ({
     wakeUp,
     guided,
     automode,
+    homelock,
   } = bindActionCreators(
     createUAVOperationThunks({
       getTargetedUAVIds(state) {
@@ -172,6 +174,15 @@ const UAVOperationsButtonGroup = ({
           onClick={automode}
         >
           <AutoMode fontSize={fontSize} />
+        </IconButton>
+      </Tooltip>
+      <Tooltip content={'Home Lock'}>
+        <IconButton
+          disabled={isSelectionEmpty}
+          size={iconSize}
+          onClick={homelock}
+        >
+          <HomeLock fontSize={fontSize} />
         </IconButton>
       </Tooltip>
 

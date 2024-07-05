@@ -15,9 +15,9 @@ import MenuItem from '@material-ui/core/MenuItem';
 import { Button, Select } from '@material-ui/core';
 
 import { details } from './details';
-import tam5Single from '~/skyc/jas.json';
+import tam5Single from '~/skyc/MIT-WS-sharan.json';
 // import tam5Single from '~/skyc/tambaram-5-alt.json';
-import DceRoad from '~/skyc/dc-3-new-loc.json';
+// import DceRoad from '~/skyc/dc-3-new-loc.json';
 
 import {
   InputLabel,

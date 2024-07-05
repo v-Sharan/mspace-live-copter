@@ -15,13 +15,13 @@ const video = [
   {
     id: 1,
     name: 'Camera 1',
-    url: 'http://192.168.6.21:8000/video_1',
+    url: 'http://192.168.6.215:8000/video_1',
     ip: '192.168.6.131',
   },
   {
     id: 2,
     name: 'Camera 2',
-    url: 'http://192.168.6.21:8000/video_2',
+    url: 'http://192.168.6.215:8000/video_2',
     ip: '192.168.6.161',
   },
   { id: 3, name: 'All Camera', url: 'http://192.168.6.21:8000/all_camera' },
@@ -75,6 +75,7 @@ const SpareDronePanel = () => {
         type: 'X-Camera-MISSION',
         message: msg,
         ip: gimbal,
+        start: recState ? 0 : 1,
       });
 
       if (Boolean(res?.body?.message)) {
@@ -135,14 +136,15 @@ const SpareDronePanel = () => {
           </div>
         )
       ) : (
-        <img
-          style={{
-            // position: 'absolute',
-            width: '50%',
-            height: '50%',
-          }}
-          src={camUrl}
-        />
+        // <img
+        //   style={{
+        //     // position: 'absolute',
+        //     width: '50%',
+        //     height: '50%',
+        //   }}
+        //   src={camUrl}
+        // />
+        <div></div>
       )}
       <RadioGroup
         key='cameraPanel'

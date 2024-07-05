@@ -93,7 +93,7 @@ const MapViewLayersPresentation = ({
   onFeaturesModified,
   selectedTool,
   zoom,
-  currentFrameTime,
+  // currentFrameTime,
 }) => {
   let zIndex = 0;
   const renderedLayers = [];
@@ -141,13 +141,6 @@ const MapViewLayersPresentation = ({
   };
   renderedLayers.push(<ImageLayer layer={Cutomlayer} zIndex={6} />);
 
-  // dispatch(
-  //   showNotification({
-  //     message: Cutomlayer.parameters.transform.scale,
-  //     semantics: MessageSemantics.INFO,
-  //   })
-  // );
-
   return renderedLayers;
 };
 
@@ -167,7 +160,7 @@ const MapViewLayers = connect(
     layers: getVisibleLayersInOrder(state),
     selectedTool: getSelectedTool(state),
     zoom: state.map.view.zoom,
-    currentFrameTime: getCurrentFrameTime(state),
+    // currentFrameTime: getCurrentFrameTime(state),
   })
 )(MapViewLayersPresentation);
 
@@ -257,7 +250,7 @@ class MapViewPresentation extends React.Component {
   }
 
   render() {
-    const { rotation, selectedTool, zoom, onChangeVideoFrame } = this.props;
+    const { rotation, selectedTool, zoom } = this.props;
     const center = [locData[0].lon, locData[0].lat];
     const view = (
       <View
@@ -316,7 +309,7 @@ class MapViewPresentation extends React.Component {
             {/* <MapContextMenu /> */}
             {/* </ShowContextMenu> */}
           </Map>
-          <VideoComponent handleTime={onChangeVideoFrame} />
+          <VideoComponent handleTime={this._onChangeVideoFrame} />
         </div>
       </NearestItemTooltip>
     );
@@ -507,6 +500,14 @@ class MapViewPresentation extends React.Component {
         })
       );
     }
+  };
+
+  /**
+   * Event handler that is called when the user moves the map view. Synchronizes
+   * the state of the map view back to the state store.
+   */
+  _onChangeVideoFrame = (time) => {
+    this.props.dispatch(updateCurrentFrameTime(time));
   };
 
   _onNearestFeatureChanged = (feature) => {
